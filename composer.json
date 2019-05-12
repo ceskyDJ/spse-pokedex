@@ -1,0 +1,17 @@
+{
+    "name": "ceskydj/spse-pokedex",
+    "license": "proprietary",
+    "description": "Pokedex for web application project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Michal ŠMAHEL",
+            "email": "ceskyDJ@seznam.cz"
+        },
+        {
+            "name": "Václav PAVLÍČEK",
+            "email": "vaclav@pavlicek.cz"
+        }
+    ],
+    "require": {}
+}
