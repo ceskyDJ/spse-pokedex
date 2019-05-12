@@ -1,0 +1,19 @@
+# Docastne soubory a logy
+log/
+*.log
+temp/
+
+# Konfiguracni soubory
+# Povoleni konfiguracnich souboru v korenovem adresari
+!.gitignore
+!.htaccess
+
+# Stazene balicky balickovacich systemu
+!vendor/*
+node_modules/
+
+# Ostatni
+other/
+
+# DB - ER diagramy apod.
+!other/database/
