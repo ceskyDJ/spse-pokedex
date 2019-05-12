@@ -17,3 +17,4 @@ other/
 
 # DB - ER diagramy apod.
 !other/database/
+other/database/*.bak
