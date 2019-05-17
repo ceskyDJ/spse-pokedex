@@ -23,7 +23,16 @@
 }
 
 .pokemons .pokemon {
-    max-width: 360px;
+    color: black;
+    max-width: 320px;
+    text-decoration: none;
+    border: solid 2px black;
+    border-radius: 24px;
+    padding: 20px;
+}
+
+.pokemons .pokemon:hover {
+    background-color: #efefef;
 }
 
 .pokemons .pokemon .pokemon-image {
@@ -62,6 +71,12 @@
     background-color: purple;
 }
 
+.footer .footer-title {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}
+
 @media only screen and (min-width: 600px) {
     .content-container {
         padding: 32px;
@@ -75,7 +90,7 @@
 
 @media only screen and (min-width: 1024px) {
     .content-container {
-        padding: 32px 48px;
+        padding: 32px 48px 48px 48px;
     }
 
     .pokemons {
@@ -85,6 +100,10 @@
 }
 
 @media only screen and (min-width: 1440px) {
+    .content-container {
+        padding: 48px 64px 64px 64px;
+    }
+
     .pokemons {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
