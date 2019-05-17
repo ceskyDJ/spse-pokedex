@@ -1,0 +1,41 @@
+* {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.content-container {
+    padding: 32px 16px;
+}
+
+.content-container .title {
+    text-align: center;
+    margin: 0;
+    font-size: 48px;
+}
+
+.pokemons .pokemon .pokemon-image {
+    width: 100%;
+}
+
+.pokemons .pokemon .pokemon-number {
+    margin: 4px 0;
+    font-size: 20px;
+}
+
+.pokemons .pokemon .pokemon-name {
+    margin: 4px 0;
+    font-size: 36px;
+}
+
+.pokemons .pokemon .skills {
+    display: flex;
+    flex-direction: row;
+}
+
+.pokemons .pokemon .skills .skill {
+    padding: 6px 0;
+    width: 80px;
+    border: solid black 1px;
+    margin-right: 8px;
+    text-align: center;
+    border-radius: 8px;
+}

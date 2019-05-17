@@ -1,0 +1,11 @@
+body {
+    display: flex;
+    margin: 0;
+    background: darkgrey;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-container {
+    background: white;
+}
