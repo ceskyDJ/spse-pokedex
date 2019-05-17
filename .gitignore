@@ -1,20 +1,16 @@
-# Docastne soubory a logy
+# Temp files and logs
 log/
 *.log
 temp/
 
-# Konfiguracni soubory
-# Povoleni konfiguracnich souboru v korenovem adresari
+# Config files
+# Allowing config files in root
 !.gitignore
 !.htaccess
 
-# Stazene balicky balickovacich systemu
+# Downloaded files of Composer and Node.js packages
 !vendor/*
 node_modules/
 
-# Ostatni
-other/
-
-# DB - ER diagramy apod.
-!other/database/
-other/database/*.bak
+# Workbench backup files
+*.bak
