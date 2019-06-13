@@ -1,3 +1,20 @@
+.content-container .filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filter, .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.submit-button {
+    width: 150px;
+}
+
 .pokemons {
     display: grid;
     grid-template-columns: 1fr;
@@ -36,6 +53,20 @@
     .pokemons {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .content-container .filters {
+        flex-direction: row;
+        margin: 16px 0;
+    }
+
+    .filter, .button-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 0 8px;
     }
 }
 

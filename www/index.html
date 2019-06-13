@@ -12,6 +12,23 @@
 <body>
     <div class="content-container">
         <h1 class="title">SPŠE Pokédex</h1>
+        <form class="filters">
+            <div class="filter">
+                <label fod="pokemon-type">Type:</label>
+                <select id="pokemon-type">
+                    <option value="grass">Grass</option>
+                    <option value="poison">Poison</option>
+                    <option value="mercedes">Water</option>
+                  </select>
+            </div>
+            <div class="filter">
+                <label fod="owner-nick">Owner:</label>
+                <input type="text" id="owner-nick"/>
+            </div>
+            <div class="button-container">
+                <input type="submit" value="Send" class="submit-button"/>
+            </div>        
+        </form>
         <div class="pokemons">
             <a href="detail.html" class="pokemon">
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
