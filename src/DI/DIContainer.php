@@ -7,6 +7,8 @@ namespace App\DI;
 use App\Common\DefaultObject;
 use App\Exceptions\LoadNonInjectableClassException;
 use App\Reflection\SmartReflectionClass;
+use function end;
+use function explode;
 use ReflectionException;
 use ReflectionObject;
 use ReflectionProperty;
@@ -121,18 +123,25 @@ class DIContainer extends DefaultObject
 
             list(, $className) = $matches;
 
-            // Find full qualified class name (with namespaces)
-            $reflectionClass = new SmartReflectionClass($instance);
+            // Get full qualified class name
+            if(strstr($className, "\\")) {
+                // Class name is full qualified type -> everything is OK
+                $fullClassName = $className;
+            } else {
+                // It's the short one, so it's to transform to full qualified one
+                // Find full qualified class name (with namespaces)
+                $reflectionClass = new SmartReflectionClass($instance);
 
-            try {
-                $reflectionUse = $reflectionClass->getUseForClass($className);
-                $fullClassName = $reflectionUse->getFullClassName();
-            }
-            catch (ReflectionException $e) {
-                // Dependency class is in the same namespaces like actual instance's class
-                // (=> there isn't any import (use) in the file for required dependency)
-                // Namespaces are inherited from actual instance
-                $fullClassName = $reflectionClass->getNamespaceName()."\\$className";
+                try {
+                    $reflectionUse = $reflectionClass->getUseForClass($className);
+                    $fullClassName = $reflectionUse->getFullClassName();
+                }
+                catch (ReflectionException $e) {
+                    // Dependency class is in the same namespaces like actual instance's class
+                    // (=> there isn't any import (use) in the file for required dependency)
+                    // Namespaces are inherited from actual instance
+                    $fullClassName = $reflectionClass->getNamespaceName()."\\$className";
+                }
             }
 
             // Instance injection into parameter
