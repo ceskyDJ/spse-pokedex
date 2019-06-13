@@ -9,6 +9,7 @@ use App\Exceptions\LoadNonInjectableClassException;
 use App\Reflection\SmartReflectionClass;
 use function end;
 use function explode;
+use function ltrim;
 use ReflectionException;
 use ReflectionObject;
 use ReflectionProperty;
@@ -16,6 +17,7 @@ use function array_key_exists;
 use function get_class;
 use function strstr;
 use function strtolower;
+use Tracy\Debugger;
 
 /**
  * Dependency injection container
@@ -59,6 +61,11 @@ class DIContainer extends DefaultObject
      */
     public function getInstance(string $classWithNamespace): ?object
     {
+        // Unification of full qualified class name styles
+        // first: \Vendor\Namespace\Class
+        // second: Vendor\Namespace\Class (without \ at first position)
+        $classWithNamespace = ltrim($classWithNamespace, "\\");
+
         // Instance has been created yet
         if (array_key_exists($classWithNamespace, $this->loadedInstances)
             && $this->loadedInstances[$classWithNamespace] != null) {
