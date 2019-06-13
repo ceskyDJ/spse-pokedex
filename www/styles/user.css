@@ -1,0 +1,6 @@
+.filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 8px 0 16px;
+}
