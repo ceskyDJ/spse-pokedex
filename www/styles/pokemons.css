@@ -14,7 +14,7 @@
     padding: 20px;
 }
 
-.pokemons .pokemon:hover {
+.pokemons.hover .pokemon:hover {
     background-color: #efefef;
 }
 
