@@ -1,0 +1,25 @@
+.filter, .button-container {
+    margin: 8px 0 16px;
+}
+
+.add-pokemon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 8px 0 16px;
+}
+
+.add-pokemon .link {
+    color: black;
+}
+
+.detail-link .icon-image, .delete-button .icon-image {
+    height: 32px;
+}
+
+.delete-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0 0 0 16px;
+}

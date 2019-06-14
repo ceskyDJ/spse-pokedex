@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    background-color: white;
+}
+
+.header .header-item {
+    margin: 4px 8px;
+}
+
+.header .header-item .link {
+    color: black;
+}

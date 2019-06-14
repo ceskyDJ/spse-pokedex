@@ -1,0 +1,13 @@
+.add-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-user-form .field-container, .add-user-form .button-container {
+    margin: 8px;
+}
+
+input, label {
+    font-size: 20px;
+}

@@ -1,0 +1,13 @@
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-user-form .field-container, .edit-user-form .button-container {
+    margin: 8px;
+}
+
+input, label {
+    font-size: 20px;
+}

@@ -1,0 +1,29 @@
+.detail-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 32px;
+}
+
+.detail-container .pokemon-image-container {
+    display: grid;
+    justify-items: center;
+}
+
+.detail-container .pokemon-image-container .pokemon-image {
+    width: 100%;
+    max-width: 400px;
+}
+
+.detail-container .info-container {
+    max-width: 400px;
+}
+
+@media only screen and (min-width: 600px) {
+    .detail-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .detail-container .pokemon-image-container {
+        justify-items: flex-end;
+    }
+}
