@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="styles/common.css" rel="stylesheet">
+    <link href="styles/pokemon-form.css" rel="stylesheet">
+    <link href="styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body>
+    <div class="content-container">
+        <h1 class="title">SPŠE Pokédex - Add/Edit pokémon</h1>
+        <form class="pokemon-form">
+            <div class="field-container">
+                <label fod="name">Name:</label>
+                <input type="text" id="name"/>
+            </div>
+            <div class="field-container">
+                <label fod="photo">Photo:</label>
+                <input type="file" id="photo"/>
+            </div>
+            <div class="field-container">
+                <label>Type (3 max):</label>                
+                <select id="pokemon-type-1">
+                    <option value="grass">Grass</option>
+                    <option value="poison">Poison</option>
+                    <option value="mercedes">Water</option>
+                </select>
+                <button>Add type</button>
+            </div>
+            <div class="field-container">
+                <label fod="description">Description:</label>
+                <textarea id="description"></textarea>
+            </div>
+            <div class="button-container">
+                <input type="submit" value="Change" class="submit-button"/>
+            </div>        
+        </form>
+    </div>
+    <foooter class="footer">
+        <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+    </foooter>
+</body>
+</html>
