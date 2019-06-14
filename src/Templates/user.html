@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <link href="styles/header.css" rel="stylesheet">
-    <link href="styles/user.css" rel="stylesheet">
-    <link href="styles/common.css" rel="stylesheet">
-    <link href="styles/footer.css" rel="stylesheet">
-    <link href="styles/pokemons.css" rel="stylesheet">
+    <link href="../../www/styles/header.css" rel="stylesheet">
+    <link href="../../www/styles/user.css" rel="stylesheet">
+    <link href="../../www/styles/common.css" rel="stylesheet">
+    <link href="../../www/styles/footer.css" rel="stylesheet">
+    <link href="../../www/styles/pokemons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <title>Pokédex</title>
 </head>
@@ -22,17 +22,41 @@
     </header>
     <div class="content-container">
         <h1 class="title">SPŠE Pokédex - User</h1>        
+        <div class="add-pokemon">            
+            <a class="link" href="#">Add pokémon</a>
+        </div>
         <form class="filters">
             <div class="filter">
-                <label fod="order-type ">Name:</label>
-                <input type="text"/>
+                <label for="pokemon-type">Type:</label>
+                <select id="pokemon-type">
+                    <option value="grass">Grass</option>
+                    <option value="poison">Poison</option>
+                    <option value="mercedes">Water</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="order-type">Order:</label>
+                <select id="order-type">
+                    <option value="alphabetically-ascending">Alphabetically - Ascending</option>
+                    <option value="alphabetically-descending">Alphabetically - Descending</option>
+                    <option value="numerically-ascending">Numerically - Ascending</option>
+                    <option value="numerically-descending">Numerically - Descending</option>
+                </select>
             </div>
             <div class="button-container">
                 <input type="submit" value="Send" class="submit-button"/>
             </div>
         </form>
-        <div class="pokemons hover pointer">
+        <div class="pokemons">
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -42,6 +66,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -51,6 +83,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -60,6 +100,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -69,6 +117,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -78,6 +134,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -87,6 +151,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -96,6 +168,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -105,6 +185,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -114,6 +202,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -123,6 +219,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -132,6 +236,14 @@
                 </div>
             </div>
             <div class="pokemon">
+                <div class="header">
+                    <a href="detail.html" class="detail-link">
+                        <img src="../../www/images/info-icon.png" class="icon-image" alt="Info">
+                    </a>
+                    <button class="delete-button">
+                        <img src="../../www/images/delete-icon.png" class="icon-image" alt="Delete">
+                    </button>
+                </div>
                 <img class="pokemon-image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png" alt="Pokémon photo">
                 <h3 class="pokemon-number">#001</h3>
                 <h2 class="pokemon-name">Pokémon</h2>
@@ -142,8 +254,8 @@
             </div>
         </div>
     </div>
-    <foooter class="footer">
+    <footer class="footer">
         <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
-    </foooter>
+    </footer>
 </body>
 </html>

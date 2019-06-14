@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <link href="styles/common.css" rel="stylesheet">
-    <link href="styles/index.css" rel="stylesheet">
-    <link href="styles/header.css" rel="stylesheet">
-    <link href="styles/pokemons.css" rel="stylesheet">
-    <link href="styles/footer.css" rel="stylesheet">
+    <link href="../../www/styles/common.css" rel="stylesheet">
+    <link href="../../www/styles/index.css" rel="stylesheet">
+    <link href="../../www/styles/header.css" rel="stylesheet">
+    <link href="../../www/styles/pokemons.css" rel="stylesheet">
+    <link href="../../www/styles/footer.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <title>Pokédex</title>
 </head>
@@ -27,7 +27,7 @@
         <h1 class="title">SPŠE Pokédex</h1>
         <form class="filters">
             <div class="filter">
-                <label fod="pokemon-type">Types:</label>
+                <label for="pokemon-type">Types:</label>
                 <select id="pokemon-type">
                     <option value="grass">Grass</option>
                     <option value="poison">Poison</option>
@@ -35,11 +35,11 @@
                 </select>
             </div>
             <div class="filter">
-                <label fod="owner-nick">Owner:</label>
+                <label for="owner-nick">Owner:</label>
                 <input type="text" id="owner-nick"/>
             </div>
             <div class="filter">
-                <label fod="order-type ">Order:</label>
+                <label for="order-type">Order:</label>
                 <select id="order-type">
                     <option value="alphabetically-ascending">Alphabetically - Ascending</option>
                     <option value="alphabetically-descending">Alphabetically - Descending</option>
@@ -162,8 +162,8 @@
             </a>
         </div>
     </div>
-    <foooter class="footer">
+    <footer class="footer">
         <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
-    </foooter>
+    </footer>
 </body>
 </html>
