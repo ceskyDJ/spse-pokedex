@@ -18,6 +18,10 @@
     background-color: #efefef;
 }
 
+.pokemons.pointer {
+    cursor: pointer;
+}
+
 .pokemons .pokemon .pokemon-image {
     width: 100%;
 }

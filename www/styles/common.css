@@ -55,6 +55,10 @@ body {
     justify-content: center;
 }
 
+.content-container .filters label {
+    font-size: 24px;
+}
+
 .filter, .button-container {
     margin: 8px 0;
 }
