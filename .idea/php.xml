@@ -3,6 +3,14 @@
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/nette/finder" />
+      <path value="$PROJECT_DIR$/vendor/nette/caching" />
+      <path value="$PROJECT_DIR$/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/vendor/nette/database" />
+      <path value="$PROJECT_DIR$/vendor/olifolkerd/convertor" />
+      <path value="$PROJECT_DIR$/vendor/tracy/tracy" />
+      <path value="$PROJECT_DIR$/vendor/jandrabek/tracy-gitversion-panel" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
 </project>
