@@ -1,10 +1,10 @@
-.add-user-form {
+.edit-user-form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.add-user-form .field-container, .add-user-form .button-container {
+.edit-user-form .field-container, .edit-user-form .button-container {
     margin: 8px;
 }
 
