@@ -2,6 +2,7 @@
 log/
 *.log
 temp/
+www/test.php
 
 # Config files
 # Allowing config files in root
