@@ -14,13 +14,13 @@
 <body>
     <header class="header">
         <div class="header-item">
-            <a class="link" href="admin/user.html">User</a>
+            <a class="link" href="user.html">User</a>
         </div>
         <div class="header-item">            
             <a class="link" href="#">Logout</a>
         </div>
         <div class="header-item">            
-            <a class="link" href="admin/login.html">Login</a>
+            <a class="link" href="login.html">Login</a>
         </div>
     </header>
     <div class="content-container">
@@ -32,15 +32,24 @@
                     <option value="grass">Grass</option>
                     <option value="poison">Poison</option>
                     <option value="mercedes">Water</option>
-                  </select>
+                </select>
             </div>
             <div class="filter">
                 <label fod="owner-nick">Owner:</label>
                 <input type="text" id="owner-nick"/>
             </div>
+            <div class="filter">
+                <label fod="order-type ">Order:</label>
+                <select id="order-type">
+                    <option value="alphabetically-ascending">Alphabetically - Ascending</option>
+                    <option value="alphabetically-descending">Alphabetically - Descending</option>
+                    <option value="numerically-ascending">Numerically - Ascending</option>
+                    <option value="numerically-descending">Numerically - Descending</option>
+                </select>
+            </div>
             <div class="button-container">
                 <input type="submit" value="Send" class="submit-button"/>
-            </div>        
+            </div>
         </form>
         <div class="pokemons hover">
             <a href="detail.html" class="pokemon">

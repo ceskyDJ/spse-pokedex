@@ -1,7 +1,4 @@
-.filter {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.filter, .button-container {
     margin: 8px 0 16px;
 }
 

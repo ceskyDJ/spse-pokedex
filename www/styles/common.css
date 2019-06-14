@@ -49,9 +49,34 @@ body {
     background-color: purple;
 }
 
+.content-container .filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filter, .button-container {
+    margin: 8px 0;
+}
+
+.submit-button {
+    width: 150px;
+}
+
 @media only screen and (min-width: 600px) {
     .content-container {
         padding: 32px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .content-container .filters {
+        flex-direction: row;
+        margin: 16px 0;
+    }
+
+    .filter, .button-container {
+        margin: 0 8px;
     }
 }
 
