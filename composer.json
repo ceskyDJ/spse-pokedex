@@ -13,5 +13,23 @@
             "email": "vaclav@pavlicek.cz"
         }
     ],
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "nette/database": "^3.0",
+        "ext-json": "*",
+        "olifolkerd/convertor": "dev-master",
+        "ext-mbstring": "*",
+        "tracy/tracy": "^2.6",
+        "jandrabek/tracy-gitversion-panel": "^2.0"
+    },
+    "repositories": {
+        "convertor": {
+            "type": "vcs",
+            "url": "https://github.com/olifolkerd/convertor"
+        }
+    }
 }
