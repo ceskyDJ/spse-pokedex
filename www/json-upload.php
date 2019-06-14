@@ -14,8 +14,6 @@ use App\Repository\DBJsonUploaderRepository;
 use App\Tool\JsonParser;
 use Nette\Database\UniqueConstraintViolationException;
 
-require_once '../src/starter.php';
-
 // Configs
 $jsonFile = '../other/data/pokedex.json';
 

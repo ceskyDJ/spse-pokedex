@@ -1,0 +1,22 @@
+# !! While uploading to server it need merge - there're some differencies between local and server version!!
+
+# Allow outside access
+Allow from all
+
+<IfModule mod_autoindex.c>
+# Turn off directory content showing
+  Options -Indexes
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  # Turn on rewrite engine and config base path to root
+  RewriteEngine on
+  RewriteBase /
+
+  # Missing of redirect to www and HTTPS variants is intentional - localhost cannot work with them
+
+  # Everything route to index.php (except request to files of specified type)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule !\.(css|js|php|phtml|html|icon|zip|rar|png|jpg|gif|pdf|otf|eot|svg|ttf|woff|woff2)$ index.php [L]
+</IfModule>
