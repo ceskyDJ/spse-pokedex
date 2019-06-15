@@ -69,6 +69,7 @@ class DBPersonRepository implements IPersonRepository
             $personData['nick'],
             $personData['password'],
             $personData['email'],
+            (bool)$personData['is_admin'],
             $personData['first_name'],
             $personData['last_name'],
             $personData['birth']

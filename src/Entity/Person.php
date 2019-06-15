@@ -32,6 +32,10 @@ class Person
      */
     private $email;
     /**
+     * @var bool admin Is person admin?
+     */
+    private $admin;
+    /**
      * @var string firstName First name
      */
     private $firstName;
@@ -51,6 +55,7 @@ class Person
      * @param string $nick
      * @param string $passwordHash
      * @param string $email
+     * @param bool $admin
      * @param string $firstName
      * @param string $lastName
      * @param \DateTime $birth
@@ -60,6 +65,7 @@ class Person
         string $nick,
         string $passwordHash,
         string $email,
+        bool $admin,
         string $firstName,
         string $lastName,
         DateTime $birth
@@ -68,6 +74,7 @@ class Person
         $this->nick = $nick;
         $this->passwordHash = $passwordHash;
         $this->email = $email;
+        $this->admin = $admin;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->birth = $birth;
@@ -151,6 +158,30 @@ class Person
     public function setEmail(string $email): Person
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Getter for admin
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->admin;
+    }
+
+    /**
+     * Fluent setter for admin
+     *
+     * @param bool $admin
+     *
+     * @return Person
+     */
+    public function setAdmin(bool $admin): Person
+    {
+        $this->admin = $admin;
 
         return $this;
     }

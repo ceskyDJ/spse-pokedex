@@ -189,4 +189,18 @@ class PersonManager extends Model
 
         $this->router->route("");
     }
+
+    /**
+     * Checks if is actually logged-in person admin
+     *
+     * @return bool Is person admin?
+     */
+    public function isLoggedInPersonAdmin(): bool
+    {
+        /**
+         * @var \App\Entity\Person $person
+         */
+        $person = $_SESSION['person'];
+        return $person->isAdmin();
+    }
 }
