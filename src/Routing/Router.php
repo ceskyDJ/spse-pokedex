@@ -31,6 +31,10 @@ class Router
         // Remove unnecessary slashes
         $url = trim($url, "/");
 
+        // Fix for main page (no path in URL)
+        $url = $url === "" ? "home" : $url;
+        $url = $url === "admin" ? "admin/home" : $url;
+
         // TODO: Do it better, please...
         if(file_exists("{$url}.php")) {
             return "{$url}.php";
