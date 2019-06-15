@@ -38,6 +38,24 @@ class ExceptionAlertsTranslator
                 return "Zadaný uživatel neexistuje.";
             case "You have insufficient permissions to do this.":
                 return "Pro vykonání této akce nemáte dostatečná oprávnění.";
+            case "Name is too short.":
+                return "Název je příliš krátký. Minimální délka činí 3 znaky.";
+            case "Specified type doesn't exists.":
+                return "Zadaný typ pokémona neexistuje";
+            case "Some data isn't OK. (type)":
+                return "Zadný název je již obsazen.";
+            case "Specified pokemon doesn't exists.":
+                return "Zadaný pokémon neexistuje";
+            case "Official number format isn't valid.":
+                return "Číslo v oficiálním pokedexu má chybný formát. Použijte: XXX. Pokud je číslo malé, že třeba před něho napsat dostatek 0";
+            case "Pokemon's name is too short.":
+                return "Jméno pokémona je příliš krátké. Minimální délka jsou 3 znaky.";
+            case "Image URL has bad format.":
+                return "URL obrázku pokémona má chybný formát. Použijte tento: http(s)://www.example.com";
+            case "Spawn time format isn't valid.":
+                return "Čas rození pokémonů má chybný formát. Použijte: H:m";
+            case "Some data isn't OK. (pokemon)":
+                return "Zadané oficiální číslo, jméno a/nebo adreas obrázku jsou již zabrané.";
 //            case "":
 //                return "";
             default:
