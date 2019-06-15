@@ -6,6 +6,7 @@ namespace App\Routing;
 
 use App\Exceptions\PageNotFoundException;
 use function file_exists;
+use function header;
 use function trim;
 
 /**
@@ -36,5 +37,26 @@ class Router
         } else {
             throw new PageNotFoundException("Page with this URL isn't exists.");
         }
+    }
+
+    /**
+     * Routes to specific URL
+     *
+     * @param string $url URL
+     */
+    public function route(string $url): void
+    {
+        header("Location: /$url");
+        exit;
+    }
+
+    /**
+     * Refreshes page
+     *
+     * @param int $delay Delay (in seconds)
+     */
+    public function refresh(int $delay = 0): void
+    {
+        header("Refresh:{$delay}");
     }
 }
