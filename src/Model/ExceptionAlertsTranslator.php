@@ -34,6 +34,10 @@ class ExceptionAlertsTranslator
                 return "Zadaná přezdívka a/nebo email je již obsazen(a).";
             case "Nick and/or password isn't valid.":
                 return "Zadaná přezdívka a/nebo heslo nejsou správné.";
+            case "Specified user doesn't exists.":
+                return "Zadaný uživatel neexistuje.";
+            case "You have insufficient permissions to do this.":
+                return "Pro vykonání této akce nemáte dostatečná oprávnění.";
 //            case "":
 //                return "";
             default:

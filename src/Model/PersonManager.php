@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Entity\Person;
 use App\Exceptions\BadFormDataException;
+use App\Exceptions\InsufficientPermissionsException;
 use App\Exceptions\InvalidUserPasswordException;
 use App\Exceptions\RepositoryDataManipulationException;
 use App\Model\Common\Model;
@@ -202,5 +203,99 @@ class PersonManager extends Model
          */
         $person = $_SESSION['person'];
         return $person->isAdmin();
+    }
+
+    /**
+     * Edits registered person
+     *
+     * @param int $personId Identification number
+     * @param string $newNick New nickname
+     * @param string $newEmail New email
+     * @param string $newFirstName New first name
+     * @param string $newLastName New last name
+     * @param string $newBirth New date of birth
+     *
+     * @throws \App\Exceptions\BadFormDataException Bad data
+     * @throws \App\Exceptions\InsufficientPermissionsException Insufficient permissions
+     */
+    public function edit(
+        int $personId,
+        string $newNick,
+        string $newEmail,
+        string $newFirstName,
+        string $newLastName,
+        string $newBirth
+    ): void {
+        // Checks
+        if ($this->isLoggedInPersonAdmin() === false) {
+            throw new InsufficientPermissionsException("You have insufficient permissions to do this.");
+        }
+
+        if (empty($newNick) || empty($newEmail) || empty($newFirstName) || empty($newLastName)
+            || empty($newBirth)) {
+            throw new BadFormDataException("Some form filed hasn't been filled.");
+        }
+
+        if (mb_strlen($newNick) < 3) {
+            throw new BadFormDataException("Nick is too short.");
+        }
+
+        if (filter_var($newEmail, FILTER_VALIDATE_EMAIL) === false) {
+            throw new BadFormDataException("Email isn't valid.");
+        }
+
+        if (mb_strlen($newFirstName) < 3 || mb_strlen($newLastName) < 3) {
+            throw new BadFormDataException("First and/or last name is too short.");
+        }
+
+        // Spaces aren't allowed
+        $newBirth = str_replace(" ", "", $newBirth);
+        try {
+            new DateTime($newBirth);
+        } catch (Exception $e) {
+            throw new BadFormDataException("Birth format isn't valid.");
+        }
+
+
+        $person = $this->dbPersonRepository->getPersonById($personId);
+
+        if($person === null) {
+            throw new BadFormDataException("Specified user doesn't exists.");
+        }
+
+        // Update
+        $person->setNick($newNick)
+            ->setEmail($newEmail)
+            ->setFirstName($newFirstName)
+            ->setLastName($newLastName);
+
+        try {
+            $this->dbPersonRepository->editPerson($person);
+        } catch (RepositoryDataManipulationException $e) {
+            throw new BadFormDataException("Some data isn't OK.");
+        }
+    }
+
+    /**
+     * Removes person
+     *
+     * @param int $personId Identification number of person to remove
+     *
+     * @throws \App\Exceptions\InsufficientPermissionsException Insufficient permissions
+     * @throws \App\Exceptions\BadFormDataException Bad data
+     */
+    public function remove(int $personId): void
+    {
+        // Checks
+        if ($this->isLoggedInPersonAdmin() === false) {
+            throw new InsufficientPermissionsException("You have insufficient permissions to do this.");
+        }
+
+        // Remove
+        try {
+            $this->dbPersonRepository->removePerson($personId);
+        } catch (RepositoryDataManipulationException $e) {
+            throw new BadFormDataException("Specified user doesn't exists.");
+        }
     }
 }
