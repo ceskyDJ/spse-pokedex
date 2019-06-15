@@ -25,6 +25,15 @@ interface IPersonRepository
     public function getPersonById(int $id): ?Person;
 
     /**
+     * Gets person by nickname
+     *
+     * @param string $nick Nickname
+     *
+     * @return \App\Entity\Person|null Person
+     */
+    public function getPersonByNick(string $nick): ?Person;
+
+    /**
      * Gets all persons
      *
      * @return \App\Entity\Person[] Persons

@@ -7,6 +7,8 @@ namespace App\Repository;
 use App\Entity\Person;
 use App\Exceptions\RepositoryDataManipulationException;
 use App\Repository\Common\IPersonRepository;
+use DateTime;
+use Exception;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
@@ -71,6 +73,27 @@ class DBPersonRepository implements IPersonRepository
             $personData['last_name'],
             $personData['birth']
         );
+    }
+
+    /**
+     * Gets person by nickname
+     *
+     * @param string $nick Nickname
+     *
+     * @return \App\Entity\Person|null Person
+     */
+    public function getPersonByNick(string $nick): ?Person
+    {
+        $personActiveRow = $this->db->table(self::PERSONS_TABLE)
+            ->where("nick", $nick)
+            ->fetch();
+
+        // No person found -> no sense to getting evolutions
+        if ($personActiveRow === null) {
+            return null;
+        }
+
+        return $this->createPersonFromDBData($personActiveRow);
     }
 
     /**
@@ -155,6 +178,8 @@ class DBPersonRepository implements IPersonRepository
         string $birth
     ): void {
         try {
+            $birth = new DateTime($birth);
+
             $this->db->table(self::PERSONS_TABLE)
                 ->insert(
                     [
@@ -163,12 +188,12 @@ class DBPersonRepository implements IPersonRepository
                         'email'      => $email,
                         'first_name' => $firstName,
                         'last_name'  => $lastName,
-                        'birth'      => $birth,
+                        'birth'      => $birth->format("Y-m-d"),
                     ]
                 );
         } catch (UniqueConstraintViolationException $e) {
             throw new RepositoryDataManipulationException("Nickname and/or email are already exists.", 0, $e);
-        } catch (ConstraintViolationException $e) {
+        } catch (ConstraintViolationException|Exception $e) {
             throw new RepositoryDataManipulationException("There was some error while executing query", 0, $e);
         }
     }
