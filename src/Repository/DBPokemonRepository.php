@@ -12,6 +12,7 @@ use App\Repository\Common\IPokemonRepository;
 use DateTime;
 use function dump;
 use Exception;
+use function in_array;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\UniqueConstraintViolationException;
@@ -251,6 +252,45 @@ class DBPokemonRepository implements IPokemonRepository
         $pokemonActiveRows = [];
         foreach ($pokemonTypesActiveRows as $pokemonTypesActiveRow) {
             $pokemonActiveRows[] = $pokemonTypesActiveRow->ref(self::POKEMONS_TABLE, "pokemon_id");
+        }
+
+        return $this->createPokemonsFromMultipleDBData($pokemonActiveRows);
+    }
+
+    /**
+     * Gets all pokemons with specific type and owner
+     *
+     * @param \App\Entity\Type $type Type of pokemon
+     * @param \App\Entity\Person $owner Owner
+     *
+     * @return \App\Entity\Pokemon[] Pokemons
+     */
+    public function getPokemonsByTypeAndOwner(Type $type, Person $owner): array
+    {
+        /**
+         * @var \Nette\Database\Table\ActiveRow[] $pokemonTypesActiveRows
+         */
+        $pokemonTypesActiveRows = $this->db->table(self::POKEMON_TYPES_TABLE)
+            ->where("type_id", $type->getId())
+            ->fetchAll();
+
+        /**
+         * @var \Nette\Database\Table\ActiveRow[] $pokemonPersonsActiveRows
+         */
+        $pokemonPersonsActiveRows = $this->db->table(self::PERSONS_POKEMONS_TABLE)
+            ->where("person_id", $owner->getId())
+            ->fetchAll();
+
+        $pokemonIdsByTypes = [];
+        foreach ($pokemonTypesActiveRows as $pokemonTypesActiveRow) {
+            $pokemonIdsByTypes[] = $pokemonTypesActiveRow['pokemon_id'];
+        }
+
+        $pokemonActiveRows = [];
+        foreach ($pokemonPersonsActiveRows as $pokemonPersonsActiveRow) {
+            if(in_array($pokemonPersonsActiveRow['pokemon_id'], $pokemonIdsByTypes)) {
+                $pokemonActiveRows[] = $pokemonPersonsActiveRow->ref(self::POKEMONS_TABLE, "pokemon_id");
+            }
         }
 
         return $this->createPokemonsFromMultipleDBData($pokemonActiveRows);

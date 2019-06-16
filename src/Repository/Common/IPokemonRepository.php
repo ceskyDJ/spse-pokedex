@@ -62,6 +62,16 @@ interface IPokemonRepository
     public function getPokemonsByType(Type $type): array;
 
     /**
+     * Gets all pokemons with specific type and owner
+     *
+     * @param \App\Entity\Type $type Type of pokemon
+     * @param \App\Entity\Person $owner Owner
+     *
+     * @return \App\Entity\Pokemon[] Pokemons
+     */
+    public function getPokemonsByTypeAndOwner(Type $type, Person $owner): array;
+
+    /**
      * Adds a new pokemon
      *
      * @param string $officialNumber Number in official pokedex
