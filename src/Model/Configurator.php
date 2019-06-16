@@ -3,19 +3,24 @@
 namespace App\Models;
 
 use App\DI\DIContainer;
+use App\Exceptions\LoadNonInjectableClassException;
 use App\Exceptions\NoConfigFileGivenException;
 use App\Exceptions\NonExistingFileException;
 use App\Exceptions\NotSetAllDataInLocalConfigException;
 use App\Model\Common\Model;
-use function array_replace_recursive;
-use function file_exists;
-use function implode;
-use function in_array;
+use JanDrabek\Tracy\GitVersionPanel;
+use Nette\Bridges\DatabaseTracy\ConnectionPanel;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Database\Connection;
 use Nette\Database\Context;
 use Nette\Database\Conventions\DiscoveredConventions;
 use Nette\Database\Structure;
+use ReflectionException;
+use Tracy\Debugger;
+use function array_replace_recursive;
+use function file_exists;
+use function implode;
+use function in_array;
 use function parse_ini_file;
 use const INI_SCANNER_TYPED;
 
@@ -135,6 +140,32 @@ class Configurator extends Model
         return $container->addInstance($dbContext)
             ->addInstance($this)
             ->addInstance($container);
+    }
+
+    /**
+     * Configures Tracy bar and paths
+     *
+     * @param \App\DI\DIContainer $container DI container
+     */
+    public function configureTracy(DIContainer $container): void
+    {
+        try {
+            Debugger::getBar()
+                ->addPanel(new GitVersionPanel());
+
+            /**
+             * @var Context $dbContext
+             */
+            $dbContext = $container->getInstance(Context::class);
+
+            Debugger::getBar()
+                ->addPanel(new ConnectionPanel($dbContext->getConnection()));
+        } catch (LoadNonInjectableClassException|ReflectionException $e) {
+            // Cannot occur, because it's types manually
+        }
+
+        Debugger::$logDirectory = $this->getLogDir();
+        Debugger::$productionMode = !$this->isActualServerDevelopment();
     }
 
     /**
