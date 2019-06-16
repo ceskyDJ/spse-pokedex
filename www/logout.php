@@ -3,18 +3,18 @@
 declare(strict_types = 1);
 
 /**
- * Detail
+ * Log-out person
  *
  * @author Michal ŠMAHEL (ceskyDJ)
  * @copyright (C) 2019-now Michal ŠMAHEL, Václav Pavlíček
  */
 
-use App\Repository\DBPokemonRepository;
+use App\Models\PersonManager;
 
 /**
- * @var \App\Repository\DBPokemonRepository $dbPokemonRepository
+ * @var PersonManager $personManager
  */
-$dbPokemonRepository = $container->getInstance(DBPokemonRepository::class);
+$personManager = $container->getInstance(PersonManager::class);
 
 // Static data
 /**
@@ -22,6 +22,9 @@ $dbPokemonRepository = $container->getInstance(DBPokemonRepository::class);
  */
 $person = isset($_SESSION['person']) ? $_SESSION['person'] : null;
 $isLoggedIn = $person !== null;
-$pokemon = $dbPokemonRepository->getPokemonById((int)$_GET['id']);
 
-require_once '../src/Templates/detail.phtml';
+if($isLoggedIn === true) {
+    $personManager->logout();
+}
+
+$router->route("login");

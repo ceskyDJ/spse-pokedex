@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="styles/common.css" rel="stylesheet">
+    <link href="styles/index.css" rel="stylesheet">
+    <link href="styles/header.css" rel="stylesheet">
+    <link href="styles/pokemons.css" rel="stylesheet">
+    <link href="styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body>
+<header class="header">
+    <?php if ($isLoggedIn === true): ?>
+        <div class="header-item">
+            <a class="link" href="user">User</a>
+        </div>
+        <div class="header-item">
+            <a class="link" href="logout">Logout</a>
+        </div>
+    <?php endif; ?>
+    <?php if ($isLoggedIn === false): ?>
+        <div class="header-item">
+            <a class="link" href="login">Login</a>
+        </div>
+    <?php endif; ?>
+</header>
+<div class="content-container">
+    <h1 class="title">SPŠE Pokédex</h1>
+    <form class="filters">
+        <div class="filter">
+            <label for="pokemon-type">Types:</label>
+            <select name="type" id="pokemon-type">
+                <option value="">Any</option>
+                <?php /** @var \App\Entity\Type $type */
+
+                foreach ($types as $type): ?>
+                    <option value="<?= $type->getId() ?>"><?= $type->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="owner-nick">Owner:</label>
+            <input name="owner" type="text" id="owner-nick" />
+        </div>
+        <!--<div class="filter">
+            <label for="order-type">Order:</label>
+            <select name="order" id="order-type">
+                <option value="alphabetically-ascending">Alphabetically - Ascending</option>
+                <option value="alphabetically-descending">Alphabetically - Descending</option>
+                <option value="numerically-ascending">Numerically - Ascending</option>
+                <option value="numerically-descending">Numerically - Descending</option>
+            </select>
+        </div>-->
+        <div class="button-container">
+            <input type="submit" value="Send" class="submit-button" />
+        </div>
+    </form>
+    <div class="pokemons hover">
+        <?php /** @var \App\Entity\Pokemon $pokemon */
+
+        foreach ($pokemons as $pokemon): ?>
+            <a href="detail?id=<?= $pokemon->getId() ?>" class="pokemon">
+                <img class="pokemon-image" src="<?= $pokemon->getImageUrl() ?>" alt="Pokémon photo">
+                <h3 class="pokemon-number">#<?= $pokemon->getOfficialNumber() ?></h3>
+                <h2 class="pokemon-name"><?= $pokemon->getName() ?></h2>
+                <div class="skills">
+                    <?php /** @var \App\Entity\Type $type */
+                    foreach ($pokemon->getTypes() as $type) ?>
+                    <div class="skill <?= mb_strtolower($type->getName()) ?>"><?= $type->getName() ?></div>
+                </div>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</div>
+<footer class="footer">
+    <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+</footer>
+</body>
+</html>

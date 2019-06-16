@@ -3,23 +3,24 @@
 declare(strict_types = 1);
 
 /**
- * Select pokemon
+ * Remove pokemon
  *
  * @author Michal ŠMAHEL (ceskyDJ)
  * @copyright (C) 2019-now Michal ŠMAHEL, Václav Pavlíček
  */
 
+use App\Exceptions\BadFormDataException;
+use App\Model\PokemonManager;
 use App\Repository\DBPokemonRepository;
-use App\Repository\DBTypeRepository;
 
 /**
  * @var \App\Repository\DBPokemonRepository $dbPokemonRepository
  */
 $dbPokemonRepository = $container->getInstance(DBPokemonRepository::class);
 /**
- * @var \App\Repository\DBTypeRepository $dbTypeRepository
+ * @var \App\Model\PokemonManager $pokemonManager
  */
-$dbTypeRepository = $container->getInstance(DBTypeRepository::class);
+$pokemonManager = $container->getInstance(PokemonManager::class);
 
 // Static data
 /**
@@ -27,23 +28,21 @@ $dbTypeRepository = $container->getInstance(DBTypeRepository::class);
  */
 $person = isset($_SESSION['person']) ? $_SESSION['person'] : null;
 $isLoggedIn = $person !== null;
-$types = $dbTypeRepository->getTypes();
 
 if ($isLoggedIn === false) {
     $router->route("login");
 }
 
-// Dynamic data
-if($_GET) {
-    $pokemon = $dbPokemonRepository->getPokemonByName($_GET['name']);
+if ($_GET) {
+    if (isset($_GET['id'])) {
+        try {
+            $pokemonManager->removeFromPerson((int)$_GET['id'], $person->getId());
 
-    if ($pokemon !== null) {
-        $pokemons = [$pokemon];
-    } else {
-        $pokemons = $dbPokemonRepository->getPokemons();
+            $router->route("user");
+        } catch (BadFormDataException $e) {
+            $router->route("user");
+        }
     }
 } else {
-    $pokemons = $dbPokemonRepository->getPokemons();
+    $router->route("select-pokemon");
 }
-
-require_once '../src/Templates/select-pokemon.phtml';

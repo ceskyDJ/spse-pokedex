@@ -3,13 +3,14 @@
 declare(strict_types = 1);
 
 /**
- * Add user
+ * Remove user
  *
  * @author Michal ŠMAHEL (ceskyDJ)
  * @copyright (C) 2019-now Michal ŠMAHEL, Václav Pavlíček
  */
 
 use App\Exceptions\BadFormDataException;
+use App\Exceptions\InsufficientPermissionsException;
 use App\Models\PersonManager;
 
 /**
@@ -23,7 +24,6 @@ $personManager = $container->getInstance(PersonManager::class);
  */
 $person = isset($_SESSION['person']) ? $_SESSION['person'] : null;
 $isLoggedIn = $person !== null;
-$message = "";
 
 if ($isLoggedIn === false) {
     $router->route("login");
@@ -33,22 +33,16 @@ if ($person->isAdmin() === false) {
     $router->route("user");
 }
 
-if ($_POST) {
+if ($_GET) {
     try {
-        $personManager->register(
-            $_POST['nick'],
-            $_POST['password'],
-            $_POST['password-again'],
-            $_POST['email'],
-            $_POST['first-name'],
-            $_POST['last-name'],
-            $_POST['birth']
-        );
+        $personManager->remove((int)$_GET['id']);
 
         $router->route("admin");
     } catch (BadFormDataException $e) {
-        $message = $e->getMessage();
+        $router->route("admin");
+    } catch (InsufficientPermissionsException $e) {
+        $router->route("user");
     }
+} else {
+    $router->route("admin");
 }
-
-require_once '../src/Templates/admin/add-user.phtml';

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="../styles/common.css" rel="stylesheet">
+    <link href="../styles/pokemon-form.css" rel="stylesheet">
+    <link href="../styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body>
+<div class="content-container">
+    <h1 class="title">SPŠE Pokédex - Add/Edit pokémon</h1>
+    <form method="post" class="pokemon-form">
+        <div class="field-container">
+            <label for="official-number">Official number:</label>
+            <input name="official-number" type="text" id="official-number" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getOfficialNumber() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="name">Name:</label>
+            <input name="name" type="text" id="name" value="<?= ($editedPokemon !== null ? $editedPokemon->getName()
+                : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="photo">Photo:</label>
+            <input name="image-url" type="url" id="photo" placeholder="https://example.com/photo.png" value="<?= ($editedPokemon
+            !== null ? $editedPokemon->getImageUrl() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="height">Výška (v m):</label>
+            <input name="height" type="text" id="height" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getHeight() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="weight">Hmotnost (v kg):</label>
+            <input name="weight" type="text" id="weight" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getWeight() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="candy">Candy:</label>
+            <select name="candy" id="candy">
+                <?php /** @var \App\Entity\Candy $candy */
+
+                foreach ($candies as $candy): ?>
+                    <option value="<?= $candy->getId() ?>" <?php if ($editedPokemon !== null
+                    && $editedPokemon->getCandy()
+                        ->getId() === $candy->getId()): ?>selected<?php endif; ?>><?= $candy->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="field-container">
+            <label for="required-candy-count">Required candy count:</label>
+            <input name="required-candy-count" type="number" id="required-candy-count" value="<?= ($editedPokemon
+            !== null ? $editedPokemon->getRequiredCandyCount() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="egg-travel-length">Egg travel length (in km):</label>
+            <input name="egg-travel-length" type="number" id="egg-travel-length" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getEggTravelLength() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="spawn-chance">Spawn chance (as real number):</label>
+            <input name="spawn-chance" type="text" id="spawn-chance" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getSpawnChance() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="spawn-time">Spawn time:</label>
+            <input name="spawn-time" type="time" id="spawn-time" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getSpawnTime()
+                    ->format(
+                        "H:i:s"
+                    ) : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="minimum-multiplier">Minimum multiplier (as real number):</label>
+            <input name="minimum-multiplier" type="text" id="minimum-multiplier" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getMinimumMultiplier() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="maximum-multiplier">Maximum multiplier (as real number):</label>
+            <input name="maximum-multiplier" type="text" id="maximum-multiplier" value="<?= ($editedPokemon !== null
+                ? $editedPokemon->getMaximumMultiplier() : "") ?>" />
+        </div>
+        <div class="field-container">
+            <label for="previous-evolution">Previous evolution:</label>
+            <select name="previous-evolution" id="previous-evolution">
+                <option value="">None</option>
+                <?php /** @var \App\Entity\Pokemon $pokemon */
+
+                foreach ($pokemons as $pokemon): ?>
+                    <option value="<?= $pokemon->getId() ?>" <?php if ($editedPokemon !== null
+                    && $editedPokemon->getPreviousEvolution() !== null
+                    && $editedPokemon->getPreviousEvolution()
+                        ->getId() === $pokemon->getId()): ?>selected<?php endif; ?>><?= $pokemon->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="field-container">
+            <label for="next-evolution">Next evolution:</label>
+            <select name="next-evolution" id="next-evolution">
+                <option value="">None</option>
+                <?php /** @var \App\Entity\Pokemon $pokemon */
+
+                foreach ($pokemons as $pokemon): ?>
+                    <option value="<?= $pokemon->getId() ?>" <?php if ($editedPokemon !== null
+                    && $editedPokemon->getNextEvolution() !== null
+                    && $editedPokemon->getNextEvolution()
+                        ->getId() === $pokemon->getId()): ?>selected<?php endif; ?>><?= $pokemon->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="field-container">
+            <label for="types">Types:</label>
+            <select name="types[]" id="types" multiple>
+                <?php /** @var \App\Entity\Type $type */
+
+                foreach ($types as $type): ?>
+                    <option value="<?= $type->getId() ?>" <?php if ($editedPokemon !== null
+                    && $editedPokemonTypes !== null
+                    && in_array(
+                        $type->getId(),
+                        $editedPokemonTypes
+                    )): ?>selected<?php endif; ?>><?= $type->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="field-container">
+            <label for="weaknesses">Weaknesses:</label>
+            <select name="weaknesses[]" id="weaknesses" multiple>
+                <?php /** @var \App\Entity\Type $type */
+
+                foreach ($types as $type): ?>
+                    <option value="<?= $type->getId() ?>" <?php if ($editedPokemon !== null
+                    && $editedPokemonWeaknesses !== null
+                    && in_array(
+                        $type->getId(),
+                        $editedPokemonWeaknesses
+                    )): ?>selected<?php endif; ?>><?= $type->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <!--<div class="field-container">
+            <label for="description">Description:</label>
+            <textarea id="description"></textarea>
+        </div>-->
+        <div class="button-container">
+            <input type="submit" value="<?= $editedPokemon !== null ? "Change" : "Add" ?>" class="submit-button" />
+        </div>
+    </form>
+    <?php if (!empty($message)): ?>
+        <p><?= $message ?></p>
+    <?php endif; ?>
+</div>
+<footer class="footer">
+    <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+</footer>
+</body>
+</html>

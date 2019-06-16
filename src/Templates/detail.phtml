@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="styles/common.css" rel="stylesheet">
+    <link href="styles/header.css" rel="stylesheet">
+    <link href="styles/detail.css" rel="stylesheet">
+    <link href="styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body>
+<header class="header">
+    <?php if ($isLoggedIn === true): ?>
+        <div class="header-item">
+            <a class="link" href="user">User</a>
+        </div>
+        <div class="header-item">
+            <a class="link" href="logout">Logout</a>
+        </div>
+    <?php endif; ?>
+    <?php if ($isLoggedIn === false): ?>
+        <div class="header-item">
+            <a class="link" href="login">Login</a>
+        </div>
+    <?php endif; ?>
+</header>
+<div class="content-container">
+    <h1 class="title"><?= $pokemon->getName() ?> #<?= $pokemon->getOfficialNumber() ?></h1>
+    <div class="detail-container">
+        <div class="pokemon-image-container">
+            <img class="pokemon-image" src="<?= $pokemon->getImageUrl() ?>" alt="Pokémon photo">
+        </div>
+        <div class="info-container">
+            <!--<p class="text"></p>-->
+            <div class="skills">
+                <?php /** @var \App\Entity\Type $type */
+
+                foreach ($pokemon->getTypes() as $type) ?>
+                <div class="skill <?= mb_strtolower($type->getName()) ?>"><?= $type->getName() ?></div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+</footer>
+</body>
+</html>

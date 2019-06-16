@@ -3,13 +3,14 @@
 declare(strict_types = 1);
 
 /**
- * Home
+ * Add pokemon to user
  *
  * @author Michal ŠMAHEL (ceskyDJ)
  * @copyright (C) 2019-now Michal ŠMAHEL, Václav Pavlíček
  */
 
-use App\Repository\DBPersonRepository;
+use App\Exceptions\BadFormDataException;
+use App\Model\PokemonManager;
 use App\Repository\DBPokemonRepository;
 
 /**
@@ -17,9 +18,9 @@ use App\Repository\DBPokemonRepository;
  */
 $dbPokemonRepository = $container->getInstance(DBPokemonRepository::class);
 /**
- * @var \App\Repository\DBPersonRepository $dbPersonRepository
+ * @var \App\Model\PokemonManager $pokemonManager
  */
-$dbPersonRepository = $container->getInstance(DBPersonRepository::class);
+$pokemonManager = $container->getInstance(PokemonManager::class);
 
 // Static data
 /**
@@ -27,15 +28,19 @@ $dbPersonRepository = $container->getInstance(DBPersonRepository::class);
  */
 $person = isset($_SESSION['person']) ? $_SESSION['person'] : null;
 $isLoggedIn = $person !== null;
-$persons = $dbPersonRepository->getPersons();
-$pokemons = $dbPokemonRepository->getPokemons();
 
 if ($isLoggedIn === false) {
     $router->route("login");
 }
 
-if($person->isAdmin() === false) {
-    $router->route("user");
-}
+if ($_GET) {
+    if (isset($_GET['id'])) {
+        try {
+            $pokemonManager->addToPerson((int)$_GET['id'], $person->getId());
 
-require_once '../src/Templates/admin/index.phtml';
+            $router->route("user");
+        } catch (BadFormDataException $e) {
+            $router->route("select-pokemon");
+        }
+    }
+}

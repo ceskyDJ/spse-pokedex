@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="../styles/common.css" rel="stylesheet">
+    <link href="../styles/admin.css" rel="stylesheet">
+    <link href="../styles/header.css" rel="stylesheet">
+    <link href="../styles/pokemons.css" rel="stylesheet">
+    <link href="../styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body class="admin">
+<header class="header">
+    <div class="header-item">
+        <a class="link" href="../user">Home</a>
+    </div>
+    <div class="header-item">
+        <a class="link" href="../logout">Logout</a>
+    </div>
+</header>
+<div class="content-container">
+    <h1 class="title">SPŠE Pokédex - admin</h1>
+    <div class="section-container">
+        <h2 class="sub-title">Users</h2>
+        <div class="add-user">
+            <a class="link" href="add-user">Add user</a>
+        </div>
+        <table class="users info-table">
+            <thead class="table-header">
+            <tr class="table-header-row">
+                <th class="id">ID</th>
+                <th class="name">Name</th>
+                <th class="actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \App\Entity\Person $person */
+
+            foreach ($persons as $person): ?>
+                <tr class="row">
+                    <td class="id"><?= $person->getId() ?></td>
+                    <td class="name"><?= $person->getNick() ?></td>
+                    <td class="actions">
+                        <a href="edit-user?id=<?= $person->getId() ?>" class="action-button edit">
+                            <img class="icon" src="../images/edit-icon.svg" alt="Edit">
+                        </a>
+                        <a href="remove-user?id=<?= $person->getId() ?>" class="action-button delete">
+                            <img class="icon" src="../images/delete-icon.png" alt="Delete">
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="section-container pokemons-section">
+        <h2 class="sub-title">Pokémons</h2>
+        <div class="add-user">
+            <a class="link" href="pokemon-form">Add pokémon</a>
+        </div>
+        <table class="users info-table">
+            <thead class="table-header">
+            <tr class="table-header-row">
+                <th class="id">ID</th>
+                <th class="name" colspan="2">Name</th>
+                <th class="actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \App\Entity\Pokemon $pokemon */
+
+            foreach ($pokemons as $pokemon): ?>
+                <tr class="row">
+                    <td class="id"><?= $pokemon->getId() ?></td>
+                    <td class="image">
+                        <img class="pokemon-image" src="<?= $pokemon->getImageUrl() ?>" alt="Pokémon image">
+                    </td>
+                    <td class="name"><?= $pokemon->getName() ?></td>
+                    <td class="actions">
+                        <a href="pokemon-form?id=<?= $pokemon->getId() ?>" class="action-button edit">
+                            <img class="icon" src="../images/edit-icon.svg" alt="Edit">
+                        </a>
+                        <a href="remove-pokemon?id=<?= $pokemon->getId() ?>" class="action-button delete">
+                            <img class="icon" src="../images/delete-icon.png" alt="Delete">
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer class="footer">
+    <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+</footer>
+</body>
+</html>

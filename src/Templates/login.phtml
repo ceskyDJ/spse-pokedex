@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="styles/common.css" rel="stylesheet">
+    <link href="styles/login.css" rel="stylesheet">
+    <link href="styles/footer.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Pokédex</title>
+</head>
+<body>
+<div class="content-container">
+    <h1 class="title">SPŠE Pokédex</h1>
+    <form method="post" class="login-form">
+        <div class="field-container">
+            <label for="login">Login:</label>
+            <input name="nick" type="text" id="login" />
+        </div>
+        <div class="field-container">
+            <label for="password">Password:</label>
+            <input name="password" type="password" id="password" />
+        </div>
+        <div class="button-container">
+            <input type="submit" value="Login" class="submit-button" />
+        </div>
+    </form>
+    <?php if (!empty($message)): ?>
+        <p><?= $message ?></p>
+    <?php endif; ?>
+</div>
+<footer class="footer">
+    <h6 class="footer-title">Created by Michal&nbsp;Šmahel & Václav&nbsp;Pavlíček</h6>
+</footer>
+</body>
+</html>
