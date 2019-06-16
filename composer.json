@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "nette/database": "^3.0",
+        "nette/database": "3.0.0",
         "ext-json": "*",
         "olifolkerd/convertor": "dev-master",
         "ext-mbstring": "*",

@@ -9,15 +9,9 @@ use App\Entity\Pokemon;
 use App\Entity\Type;
 use DateTime;
 use Exception;
-use Olifolkerd\Convertor\Convertor;
-use Olifolkerd\Convertor\Exceptions\ConvertorDifferentTypeException;
-use Olifolkerd\Convertor\Exceptions\ConvertorException;
-use Olifolkerd\Convertor\Exceptions\ConvertorInvalidUnitException;
-use Tracy\Debugger;
 use function array_keys;
 use function array_merge;
 use function array_shift;
-use function explode;
 use function in_array;
 use function is_array;
 use function json_decode;
@@ -53,6 +47,11 @@ class JsonParser
      * @var \App\Utils\FileHelper fileHelper
      */
     private $fileHelper;
+    /**
+     * @inject
+     * @var \App\Utils\PhysicalUnitsHelper physicalUnitsHelper
+     */
+    private $physicalUnitsHelper;
 
     /**
      * Get all pokemons from pokemon json
@@ -68,7 +67,8 @@ class JsonParser
 
         $pokemons = [];
         foreach ($jsonPokemons as $jsonPokemon) {
-            $eggTravelLength = $jsonPokemon['egg'] === "Not in Eggs" ? $this->getEggTravelLengthFromString(
+            $eggTravelLength = $jsonPokemon['egg'] === "Not in Eggs"
+                ? (int)$this->physicalUnitsHelper->convertToBaseMetricUnit(
                 $jsonPokemon['egg']
             ) : null;
 
@@ -99,15 +99,13 @@ class JsonParser
                 (int)$jsonPokemon['next_evolution'][0]['num']
             ) : null;
 
-            Debugger::barDump($jsonPokemon['egg']);
-
             $pokemons[] = new Pokemon(
                 (int)$jsonPokemon['num'],
                 $jsonPokemon['num'],
                 $jsonPokemon['name'],
                 $jsonPokemon['img'],
-                $this->getHeightFromString($jsonPokemon['height']),
-                $this->getWeightFromString($jsonPokemon['weight']),
+                $this->physicalUnitsHelper->convertToBaseMetricUnit($jsonPokemon['height']),
+                $this->physicalUnitsHelper->convertToBaseWeightUnit($jsonPokemon['weight']),
                 $this->dbCandyRepository->getCandyByName($jsonPokemon['candy']),
                 $jsonPokemon['candy_count'],
                 $eggTravelLength,
@@ -139,76 +137,6 @@ class JsonParser
         $parsedJson = json_decode($jsonData, true);
 
         return array_shift($parsedJson);
-    }
-
-    /**
-     * Gets egg travel length as number from string
-     *
-     * @param string $eggString String form (with metric unit)
-     *
-     * @return int Number form (in meters)
-     */
-    private function getEggTravelLengthFromString(string $eggString): int
-    {
-        list($value, $unit) = explode(" ", $eggString);
-
-        $converter = new Convertor($value, $unit);
-        try {
-            // Exceptions cannot been threw (manually typed value'll be OK every time)
-            return (int)$converter->to("m");
-        } catch (ConvertorDifferentTypeException $e) {
-            return 0;
-        } catch (ConvertorException $e) {
-            return 0;
-        } catch (ConvertorInvalidUnitException $e) {
-            return 0;
-        }
-    }
-
-    /**
-     * Gets height as number from string
-     *
-     * @param string $heightString String form (with metric unit)
-     *
-     * @return float Number form (in meters)
-     */
-    private function getHeightFromString(string $heightString): float
-    {
-        list($value, $unit) = explode(" ", $heightString);
-
-        $converter = new Convertor($value, $unit);
-        try {
-            return $converter->to("m");
-        } catch (ConvertorDifferentTypeException $e) {
-            return 0.0;
-        } catch (ConvertorException $e) {
-            return 0.0;
-        } catch (ConvertorInvalidUnitException $e) {
-            return 0.0;
-        }
-    }
-
-    /**
-     * Gets weight as number from string
-     *
-     * @param string $weightString String form (with weight unit)
-     *
-     * @return float Number form (in kilograms)
-     */
-    private function getWeightFromString(string $weightString): float
-    {
-        list($value, $unit) = explode(" ", $weightString);
-
-        $converter = new Convertor($value, $unit);
-        try {
-            return $converter->to("kg");
-        } catch (ConvertorDifferentTypeException $e) {
-            return 0.0;
-        } catch (ConvertorException $e) {
-            return 0.0;
-        } catch (ConvertorInvalidUnitException $e) {
-            return 0.0;
-        }
     }
 
     /**

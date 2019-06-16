@@ -126,17 +126,17 @@
     },
     {
         "name": "nette/database",
-        "version": "v3.0.1",
-        "version_normalized": "3.0.1.0",
+        "version": "v3.0.0",
+        "version_normalized": "3.0.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nette/database.git",
-            "reference": "302586ea4161424e4c85717e20afe611ed1506f0"
+            "reference": "044d8785152ccf950c4e8e70644ed4e0ba477bed"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nette/database/zipball/302586ea4161424e4c85717e20afe611ed1506f0",
-            "reference": "302586ea4161424e4c85717e20afe611ed1506f0",
+            "url": "https://api.github.com/repos/nette/database/zipball/044d8785152ccf950c4e8e70644ed4e0ba477bed",
+            "reference": "044d8785152ccf950c4e8e70644ed4e0ba477bed",
             "shasum": ""
         },
         "require": {
@@ -146,7 +146,7 @@
             "php": ">=7.1"
         },
         "conflict": {
-            "nette/di": "<3.0"
+            "nette/nette": "<2.2"
         },
         "require-dev": {
             "mockery/mockery": "^1.0.0",
@@ -154,7 +154,7 @@
             "nette/tester": "^2.0",
             "tracy/tracy": "^2.4"
         },
-        "time": "2019-04-01T04:56:22+00:00",
+        "time": "2019-02-20T07:10:18+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -183,7 +183,7 @@
                 "homepage": "https://nette.org/contributors"
             }
         ],
-        "description": "💾 Nette Database: layer with a familiar PDO-like API but much more powerful. Building queries, advanced joins, drivers for MySQL, PostgreSQL, SQLite, MS SQL Server and Oracle.",
+        "description": "? Nette Database: layer with a familiar PDO-like API but much more powerful. Building queries, advanced joins, drivers for MySQL, PostgreSQL, SQLite, MS SQL Server and Oracle.",
         "homepage": "https://nette.org",
         "keywords": [
             "database",

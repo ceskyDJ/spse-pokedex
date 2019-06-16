@@ -27,6 +27,15 @@ interface IPokemonRepository
     public function getPokemonById(int $id): ?Pokemon;
 
     /**
+     * Gets pokemon by name
+     *
+     * @param string $name Name
+     *
+     * @return \App\Entity\Pokemon|null Pokemon
+     */
+    public function getPokemonByName(string $name): ?Pokemon;
+
+    /**
      * Gets all pokemons
      *
      * @return \App\Entity\Pokemon[] Pokemons

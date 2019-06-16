@@ -9,7 +9,6 @@ use App\Exceptions\RepositoryDataManipulationException;
 use App\Repository\Common\ICandyRepository;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\Selection;
 use Nette\Database\UniqueConstraintViolationException;
 
 /**
@@ -93,7 +92,8 @@ class DBCandyRepository implements ICandyRepository
      */
     public function getCandies(): array
     {
-        $candyActiveRows = $this->db->table(self::CANDIES_TABLE);
+        $candyActiveRows = $this->db->table(self::CANDIES_TABLE)
+            ->fetchAll();
 
         return $this->createCandiesFromMultipleDBData($candyActiveRows);
     }
@@ -107,18 +107,22 @@ class DBCandyRepository implements ICandyRepository
      */
     public function getCandiesFromNames(array $names): array
     {
-        // TODO: Implement getCandiesFromNames() method.
+        $candyActiveRows = $this->db->table(self::CANDIES_TABLE)
+            ->where("name", $names)
+            ->fetchAll();
+
+        return $this->createCandiesFromMultipleDBData($candyActiveRows);
     }
 
     /**
      * Creates candies from multiple database data
      *
-     * @param \Nette\Database\Table\Selection $candyMultipleData Data from database (edited with Nette Database
+     * @param \Nette\Database\Table\ActiveRow[] $candyMultipleData Data from database (edited with Nette Database
      *     Explorer)
      *
      * @return \App\Entity\Candy[]
      */
-    public function createCandiesFromMultipleDBData(Selection $candyMultipleData): array
+    public function createCandiesFromMultipleDBData(array $candyMultipleData): ?array
     {
         $candies = [];
         foreach ($candyMultipleData as $candyActiveRow) {

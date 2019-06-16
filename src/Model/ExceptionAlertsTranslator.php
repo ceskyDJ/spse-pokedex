@@ -55,7 +55,9 @@ class ExceptionAlertsTranslator
             case "Spawn time format isn't valid.":
                 return "Čas rození pokémonů má chybný formát. Použijte: H:m";
             case "Some data isn't OK. (pokemon)":
-                return "Zadané oficiální číslo, jméno a/nebo adreas obrázku jsou již zabrané.";
+                return "Zadané oficiální číslo, jméno a/nebo adresa obrázku jsou již zabrané.";
+            case "Image URL doesn't point to valid image.":
+                return "URL adresa obrázku neodkazuje na soubor s obrázkem.";
 //            case "":
 //                return "";
             default:

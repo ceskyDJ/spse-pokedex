@@ -41,6 +41,15 @@ interface ITypeRepository
     public function getTypes(): array;
 
     /**
+     * Gets all types with specified identification number
+     *
+     * @param int[] $ids
+     *
+     * @return \App\Entity\Type[] Types
+     */
+    public function getTypesByIds(array $ids): array;
+
+    /**
      * Gets all types with specified names
      *
      * @param string[] $names Names of wanted types

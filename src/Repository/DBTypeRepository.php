@@ -9,7 +9,6 @@ use App\Exceptions\RepositoryDataManipulationException;
 use App\Repository\Common\ITypeRepository;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\Selection;
 use Nette\Database\UniqueConstraintViolationException;
 
 /**
@@ -92,7 +91,8 @@ class DBTypeRepository implements ITypeRepository
      */
     public function getTypes(): array
     {
-        $typeActiveRows = $this->db->table(self::TYPES_TABLE);
+        $typeActiveRows = $this->db->table(self::TYPES_TABLE)
+            ->fetchAll();
 
         return $this->createTypesFromMultipleDBData($typeActiveRows);
     }
@@ -100,11 +100,11 @@ class DBTypeRepository implements ITypeRepository
     /**
      * Creates types from multiple database data
      *
-     * @param \Nette\Database\Table\Selection $typeMultipleData Data from database (edited with Nette Database Explorer)
+     * @param \Nette\Database\Table\ActiveRow[] $typeMultipleData Data from database (edited with Nette Database Explorer)
      *
      * @return \App\Entity\Type[] Types
      */
-    public function createTypesFromMultipleDBData(Selection $typeMultipleData): array
+    public function createTypesFromMultipleDBData(array $typeMultipleData): array
     {
         $types = [];
         foreach ($typeMultipleData as $typeActiveRow) {
@@ -112,6 +112,22 @@ class DBTypeRepository implements ITypeRepository
         }
 
         return $types;
+    }
+
+    /**
+     * Gets all types with specified identification number
+     *
+     * @param int[] $ids
+     *
+     * @return \App\Entity\Type[] Types
+     */
+    public function getTypesByIds(array $ids): array
+    {
+        $typeActiveRows = $this->db->table(self::TYPES_TABLE)
+            ->where("type_id", $ids)
+            ->fetchAll();
+
+        return $this->createTypesFromMultipleDBData($typeActiveRows);
     }
 
     /**
@@ -124,7 +140,8 @@ class DBTypeRepository implements ITypeRepository
     public function getTypesByNames(array $names): array
     {
         $typeActiveRows = $this->db->table(self::TYPES_TABLE)
-            ->where("name", $names);
+            ->where("name", $names)
+            ->fetchAll();
 
         return $this->createTypesFromMultipleDBData($typeActiveRows);
     }

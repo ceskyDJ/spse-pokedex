@@ -11,7 +11,6 @@ use DateTime;
 use Exception;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\Selection;
 use Nette\Database\UniqueConstraintViolationException;
 
 /**
@@ -104,7 +103,8 @@ class DBPersonRepository implements IPersonRepository
      */
     public function getPersons(): array
     {
-        $personActiveRows = $this->db->table(self::PERSONS_TABLE);
+        $personActiveRows = $this->db->table(self::PERSONS_TABLE)
+            ->fetchAll();
 
         return $this->createPersonsFromMultipleDBData($personActiveRows);
     }
@@ -112,12 +112,12 @@ class DBPersonRepository implements IPersonRepository
     /**
      * Creates persons from multiple database data
      *
-     * @param \Nette\Database\Table\Selection $personMultipleData Data from database (edited with Nette Database
+     * @param \Nette\Database\Table\ActiveRow[] $personMultipleData Data from database (edited with Nette Database
      *     Explorer)
      *
      * @return \App\Entity\Person[] Persons
      */
-    public function createPersonsFromMultipleDBData(Selection $personMultipleData): array
+    public function createPersonsFromMultipleDBData(array $personMultipleData): array
     {
         $persons = [];
         foreach ($personMultipleData as $personActiveRow) {
