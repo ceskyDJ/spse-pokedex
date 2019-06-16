@@ -58,8 +58,8 @@ class ExceptionAlertsTranslator
                 return "Zadané oficiální číslo, jméno a/nebo adresa obrázku jsou již zabrané.";
             case "Image URL doesn't point to valid image.":
                 return "URL adresa obrázku neodkazuje na soubor s obrázkem.";
-//            case "":
-//                return "";
+            case "Specified person already owns the pokemon.":
+                return "Vybraný pokémon je již ve vlastnictví dané osoby.";
             default:
                 return "Vyskytla se neznámá chyba. Kontaktujte správce.";
         }

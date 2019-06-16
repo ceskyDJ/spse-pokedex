@@ -131,4 +131,14 @@ interface IPokemonRepository
      * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
      */
     public function removePokemon(int $id): void;
+
+    /**
+     * Adds pokemon to person
+     *
+     * @param int $pokemonId
+     * @param int $personId
+     *
+     * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
+     */
+    public function addPokemonToPerson(int $pokemonId, int $personId): void;
 }

@@ -10,12 +10,11 @@ use App\Entity\Type;
 use App\Exceptions\RepositoryDataManipulationException;
 use App\Repository\Common\IPokemonRepository;
 use DateTime;
-use function dump;
 use Exception;
-use function in_array;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\UniqueConstraintViolationException;
+use function in_array;
 use function str_pad;
 use const STR_PAD_LEFT;
 
@@ -520,5 +519,28 @@ class DBPokemonRepository implements IPokemonRepository
         }
 
         return $pokemons;
+    }
+
+    /**
+     * Adds pokemon to person
+     *
+     * @param int $pokemonId
+     * @param int $personId
+     *
+     * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
+     */
+    public function addPokemonToPerson(int $pokemonId, int $personId): void
+    {
+        try {
+            $this->db->table(self::PERSONS_POKEMONS_TABLE)
+                ->insert(
+                    [
+                        'pokemon_id' => $pokemonId,
+                        'person_id' => $personId
+                    ]
+                );
+        } catch (ConstraintViolationException $e) {
+            throw new RepositoryDataManipulationException("There was some error while executing query", 0, $e);
+        }
     }
 }

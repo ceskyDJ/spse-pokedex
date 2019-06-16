@@ -36,11 +36,6 @@ class PokemonManager
     private $personManager;
     /**
      * @inject
-     * @var \App\Utils\PhysicalUnitsHelper physicalUnitsHelper
-     */
-    private $physicalUnitsHelper;
-    /**
-     * @inject
      * @var \App\Repository\DBCandyRepository dbCandyRepository
      */
     private $dbCandyRepository;
@@ -276,6 +271,29 @@ class PokemonManager
             $this->dbPokemonRepository->removePokemon($pokemonId);
         } catch (RepositoryDataManipulationException $e) {
             throw new BadFormDataException("Specified pokemon doesn't exists.");
+        }
+    }
+
+    /**
+     * Adds pokemon to person
+     *
+     * @param int $pokemonId Pokemon's identification number
+     * @param int $personId Persons' identification number
+     *
+     * @throws \App\Exceptions\BadFormDataException Bad data
+     */
+    public function addToPerson(int $pokemonId, int $personId): void
+    {
+        // Checks
+        if (empty($pokemonId) || empty($personId)) {
+            throw new BadFormDataException("Some form filed hasn't been filled.");
+        }
+
+        // Add
+        try {
+            $this->dbPokemonRepository->addPokemonToPerson($pokemonId, $personId);
+        } catch (RepositoryDataManipulationException $e) {
+            throw new BadFormDataException("Specified person already owns the pokemon.");
         }
     }
 }
