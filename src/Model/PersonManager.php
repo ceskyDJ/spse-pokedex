@@ -298,4 +298,34 @@ class PersonManager extends Model
             throw new BadFormDataException("Specified user doesn't exists.");
         }
     }
+
+    /**
+     * Sets new password
+     *
+     * @param int $personId Identification number
+     * @param string $newPassword New password
+     *
+     * @throws \App\Exceptions\BadFormDataException Bad data
+     * @throws \App\Exceptions\InsufficientPermissionsException Insufficient permissions
+     */
+    public function setNewPassword(int $personId, string $newPassword): void
+    {
+        // Checks
+        if ($this->isLoggedInPersonAdmin() === false) {
+            throw new InsufficientPermissionsException("You have insufficient permissions to do this.");
+        }
+
+        if (mb_strlen($newPassword) < 8) {
+            throw new BadFormDataException("Password is too short.");
+        }
+
+        // Update
+        $person = $this->dbPersonRepository->getPersonById($personId);
+        $person->setPasswordHash($this->cryptographyHelper->hashPassword($newPassword, $person->getNick()));
+        try {
+            $this->dbPersonRepository->editPerson($person);
+        } catch (RepositoryDataManipulationException $e) {
+            // It's only changing password, this exception cannot been thrown
+        }
+    }
 }
