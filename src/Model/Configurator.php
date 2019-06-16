@@ -8,7 +8,10 @@ use App\Exceptions\NoConfigFileGivenException;
 use App\Exceptions\NonExistingFileException;
 use App\Exceptions\NotSetAllDataInLocalConfigException;
 use App\Model\Common\Model;
+use function bdump;
+use function is_dir;
 use JanDrabek\Tracy\GitVersionPanel;
+use function mkdir;
 use Nette\Bridges\DatabaseTracy\ConnectionPanel;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Database\Connection;
@@ -131,7 +134,7 @@ class Configurator extends Model
 
         // Databáze
         $dbConfig = $this->getDatabaseConfig();
-        $dbStorage = new FileStorage($this->getTempDir());
+        $dbStorage = new FileStorage(__DIR__."/../{$this->getTempDir()}");
         $dbConnection = new Connection("mysql:host={$dbConfig['host']};dbname={$dbConfig['database']}", $dbConfig['user-name'], $dbConfig['user-password']);
         $dbStructure = new Structure($dbConnection, $dbStorage);
         $dbConventions = new DiscoveredConventions($dbStructure);
@@ -164,7 +167,7 @@ class Configurator extends Model
             // Cannot occur, because it's types manually
         }
 
-        Debugger::$logDirectory = $this->getLogDir();
+        Debugger::$logDirectory = __DIR__."/../{$this->getLogDir()}";
         Debugger::$productionMode = !$this->isActualServerDevelopment();
     }
 
