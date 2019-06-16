@@ -72,6 +72,8 @@ class JsonParser
                 $jsonPokemon['egg']
             ) : null;
 
+            $candyCount = isset($jsonPokemon['candy_count']) ? $jsonPokemon['candy_count'] : null;
+
             if (is_array($multipliers = $jsonPokemon['multipliers'])) {
                 $minimumMultiplier = array_shift($multipliers);
 
@@ -92,7 +94,7 @@ class JsonParser
             }
 
             $previousEvolution = isset($jsonPokemon['prev_evolution']) ? $this->dbPokemonRepository->getPokemonById(
-                (int)$jsonPokemon['prev_evolution']['num']
+                (int)$jsonPokemon['prev_evolution'][0]['num']
             ) : null;
 
             $nextEvolution = isset($jsonPokemon['next_evolution']) ? $this->dbPokemonRepository->getPokemonById(
@@ -107,7 +109,7 @@ class JsonParser
                 $this->physicalUnitsHelper->convertToBaseMetricUnit($jsonPokemon['height']),
                 $this->physicalUnitsHelper->convertToBaseWeightUnit($jsonPokemon['weight']),
                 $this->dbCandyRepository->getCandyByName($jsonPokemon['candy']),
-                $jsonPokemon['candy_count'],
+                $candyCount,
                 $eggTravelLength,
                 $jsonPokemon['spawn_chance'],
                 $spawnTime,
