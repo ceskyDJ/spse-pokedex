@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Routing;
 
 use App\Exceptions\PageNotFoundException;
+use function explode;
 use function file_exists;
 use function header;
 use function trim;
@@ -28,6 +29,9 @@ class Router
      */
     public function loadUrl(string $url): string
     {
+        // Remove GET data part
+        list($url,) = explode("?", $url);
+
         // Remove unnecessary slashes
         $url = trim($url, "/");
 
