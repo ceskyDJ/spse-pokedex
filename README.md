@@ -16,8 +16,11 @@ You can see live version at https://pokedex.ceskydj.cz/
 - [/detail](https://pokedex.ceskydj.cz/detail) - Pokemon detail
 - [/json-upload](https://pokedex.ceskydj.cz/json-upload) - Upload data from json (from [GitHub](https://github.com/Biuni/PokemonGO-Pokedex))
 - [/login](https://pokedex.ceskydj.cz/login) - User log-in
-- [/select-pokemon](https://pokedex.ceskydj.cz/select-pokemon) - Search pokemon by name
+
+### Private
+
 - [/user](https://pokedex.ceskydj.cz/user) - User's dashboard, adding or removing pokemons from account
+- [/select-pokemon](https://pokedex.ceskydj.cz/select-pokemon) - Add pokemon to user account
 
 ### Administration
 
