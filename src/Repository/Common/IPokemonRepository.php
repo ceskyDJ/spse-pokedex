@@ -135,10 +135,20 @@ interface IPokemonRepository
     /**
      * Adds pokemon to person
      *
-     * @param int $pokemonId
-     * @param int $personId
+     * @param int $pokemonId Pokemon's identification number
+     * @param int $personId Person's identification number
      *
      * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
      */
     public function addPokemonToPerson(int $pokemonId, int $personId): void;
+
+    /**
+     * Removes pokemon from person
+     *
+     * @param int $pokemonId Pokemon's identification number
+     * @param int $personId Person's identification number
+     *
+     * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
+     */
+    public function removePokemonFromPerson(int $pokemonId, int $personId): void;
 }

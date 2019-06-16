@@ -296,4 +296,27 @@ class PokemonManager
             throw new BadFormDataException("Specified person already owns the pokemon.");
         }
     }
+
+    /**
+     * Removes pokemon from person
+     *
+     * @param int $pokemonId Pokemon's identification number
+     * @param int $personId Person's identification number
+     *
+     * @throws \App\Exceptions\BadFormDataException Bad data
+     */
+    public function removeFromPerson(int $pokemonId, int $personId): void
+    {
+        // Checks
+        if (empty($pokemonId) || empty($personId)) {
+            throw new BadFormDataException("Some form filed hasn't been filled.");
+        }
+
+        // Remove
+        try {
+            $this->dbPokemonRepository->removePokemonFromPerson($pokemonId, $personId);
+        } catch (RepositoryDataManipulationException $e) {
+            throw new BadFormDataException("Specified pokemon doesn't exists.");
+        }
+    }
 }

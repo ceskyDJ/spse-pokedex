@@ -543,4 +543,23 @@ class DBPokemonRepository implements IPokemonRepository
             throw new RepositoryDataManipulationException("There was some error while executing query", 0, $e);
         }
     }
+
+    /**
+     * Removes pokemon from person
+     *
+     * @param int $pokemonId Pokemon's identification number
+     * @param int $personId Person's identification number
+     *
+     * @throws \App\Exceptions\RepositoryDataManipulationException Other SQL error
+     */
+    public function removePokemonFromPerson(int $pokemonId, int $personId): void
+    {
+        try {
+            $this->db->table(self::PERSONS_POKEMONS_TABLE)
+                ->where("pokemon_id = ? AND person_id = ?", $pokemonId, $personId)
+                ->delete();
+        } catch (ConstraintViolationException $e) {
+            throw new RepositoryDataManipulationException("There was some error while executing query", 0, $e);
+        }
+    }
 }
