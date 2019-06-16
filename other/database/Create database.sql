@@ -70,23 +70,11 @@ CREATE TABLE IF NOT EXISTS `spse_pokedex`.`pokemons` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   UNIQUE INDEX `image_url_UNIQUE` (`image_url` ASC),
   INDEX `fk_pokemons_candies1_idx` (`candy_id` ASC),
-  INDEX `fk_pokemons_pokemons1_idx` (`previous_evolution` ASC),
-  INDEX `fk_pokemons_pokemons2_idx` (`next_evolution` ASC),
   CONSTRAINT `fk_pokemons_candies1`
     FOREIGN KEY (`candy_id`)
     REFERENCES `spse_pokedex`.`candies` (`candy_id`)
     ON DELETE SET NULL
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pokemons_pokemons1`
-    FOREIGN KEY (`previous_evolution`)
-    REFERENCES `spse_pokedex`.`pokemons` (`pokemon_id`)
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pokemons_pokemons2`
-    FOREIGN KEY (`next_evolution`)
-    REFERENCES `spse_pokedex`.`pokemons` (`pokemon_id`)
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION)
+    ON UPDATE SET NULL)
 ENGINE = InnoDB;
 
 
@@ -114,12 +102,12 @@ CREATE TABLE IF NOT EXISTS `spse_pokedex`.`pokemon_types` (
     FOREIGN KEY (`pokemon_id`)
     REFERENCES `spse_pokedex`.`pokemons` (`pokemon_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_pokemons_in_types_types1`
     FOREIGN KEY (`type_id`)
     REFERENCES `spse_pokedex`.`types` (`type_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -158,12 +146,12 @@ CREATE TABLE IF NOT EXISTS `spse_pokedex`.`persons_pokemons` (
     FOREIGN KEY (`pokemon_id`)
     REFERENCES `spse_pokedex`.`pokemons` (`pokemon_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_pokemons_in_persons_persons1`
     FOREIGN KEY (`person_id`)
     REFERENCES `spse_pokedex`.`persons` (`person_id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
