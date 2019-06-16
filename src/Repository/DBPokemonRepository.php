@@ -411,6 +411,14 @@ class DBPokemonRepository implements IPokemonRepository
     public function editPokemon(Pokemon $editedPokemon): void
     {
         try {
+            $candy = $editedPokemon->getCandy() !== null ? $editedPokemon->getCandy()
+                ->getId() : null;
+            $previousEvolution = $editedPokemon->getPreviousEvolution() !== null ? $editedPokemon->getPreviousEvolution(
+            )
+                ->getId() : null;
+            $nextEvolution = $editedPokemon->getNextEvolution() !== null ? $editedPokemon->getNextEvolution()
+                ->getId() : null;
+
             $this->db->table(self::POKEMONS_TABLE)
                 ->where("pokemon_id", $editedPokemon->getId())
                 ->update(
@@ -420,18 +428,15 @@ class DBPokemonRepository implements IPokemonRepository
                         'image_url'            => $editedPokemon->getImageUrl(),
                         'height'               => $editedPokemon->getHeight(),
                         'weight'               => $editedPokemon->getWeight(),
-                        'candy_id'             => $editedPokemon->getCandy()
-                            ->getId(),
+                        'candy_id'             => $candy,
                         'required_candy_count' => $editedPokemon->getRequiredCandyCount(),
                         'egg_travel_length'    => $editedPokemon->getEggTravelLength(),
                         'spawn_chance'         => $editedPokemon->getSpawnChance(),
                         'spawn_time'           => $editedPokemon->getSpawnTime(),
                         'minimum_multiplier'   => $editedPokemon->getMinimumMultiplier(),
                         'maximum_multiplier'   => $editedPokemon->getMaximumMultiplier(),
-                        'previous_evolution'   => $editedPokemon->getPreviousEvolution()
-                            ->getId(),
-                        'next_evolution'       => $editedPokemon->getNextEvolution()
-                            ->getId(),
+                        'previous_evolution'   => $previousEvolution,
+                        'next_evolution'       => $nextEvolution,
                     ]
                 );
 
