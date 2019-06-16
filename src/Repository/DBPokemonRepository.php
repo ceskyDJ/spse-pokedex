@@ -10,6 +10,7 @@ use App\Entity\Type;
 use App\Exceptions\RepositoryDataManipulationException;
 use App\Repository\Common\IPokemonRepository;
 use DateTime;
+use function dump;
 use Exception;
 use Nette\Database\ConstraintViolationException;
 use Nette\Database\Table\ActiveRow;
@@ -38,6 +39,10 @@ class DBPokemonRepository implements IPokemonRepository
      * Database table name of M:N connect table with weaknesses (types)
      */
     public const POKEMON_WEAKNESSES_TABLE = "pokemon_weaknesses";
+    /**
+     * Database table name of M:N connect table with persons (owners)
+     */
+    public const PERSONS_POKEMONS_TABLE = "persons_pokemons";
 
     /**
      * @inject
@@ -72,7 +77,7 @@ class DBPokemonRepository implements IPokemonRepository
             return null;
         }
 
-        return $this->createPokemonFromDBData($data = $this->constructPokemonData($pokemonActiveRow));
+        return $this->createPokemonFromDBData($this->constructPokemonData($pokemonActiveRow));
     }
 
     /**
@@ -125,12 +130,12 @@ class DBPokemonRepository implements IPokemonRepository
 
         $pokemonTypes = [];
         foreach ($pokemonTypeActiveRows as $pokemonTypeActiveRow) {
-            $pokemonTypes[] = $pokemonTypeActiveRow->ref("types", "type_id");
+            $pokemonTypes[] = $pokemonTypeActiveRow->ref(DBTypeRepository::TYPES_TABLE, "type_id");
         }
 
         $pokemonWeaknesses = [];
         foreach ($pokemonWeaknessActiveRows as $pokemonWeaknessActiveRow) {
-            $pokemonWeaknesses[] = $pokemonWeaknessActiveRow->ref("types", "type_id");
+            $pokemonWeaknesses[] = $pokemonWeaknessActiveRow->ref(DBTypeRepository::TYPES_TABLE, "type_id");
         }
 
         $data['pokemon'] = $pokemonActiveRow;
@@ -198,15 +203,8 @@ class DBPokemonRepository implements IPokemonRepository
     {
         $pokemonActiveRows = $this->db->table(self::POKEMONS_TABLE)
             ->fetchAll();
-        $pokemonTypeActiveRows = $this->db->table(self::POKEMON_TYPES_TABLE)
-            ->fetchAll();
-        $pokemonWeaknessActiveRows = $this->db->table(self::POKEMON_WEAKNESSES_TABLE)
-            ->fetchAll();
 
-        // TODO: Finish this work... Good luck :D
-
-        foreach ($pokemonActiveRows as $pokemonActiveRow) {
-        }
+        return $this->createPokemonsFromMultipleDBData($pokemonActiveRows);
     }
 
     /**
@@ -218,7 +216,19 @@ class DBPokemonRepository implements IPokemonRepository
      */
     public function getPokemonsByOwner(Person $owner): array
     {
-        // TODO: Implement getPokemonsByOwner() method.
+        /**
+         * @var \Nette\Database\Table\ActiveRow[] $pokemonPersonsActiveRows
+         */
+        $pokemonPersonsActiveRows = $this->db->table(self::PERSONS_POKEMONS_TABLE)
+            ->where("person_id", $owner->getId())
+            ->fetchAll();
+
+        $pokemonActiveRows = [];
+        foreach ($pokemonPersonsActiveRows as $pokemonPersonsActiveRow) {
+            $pokemonActiveRows[] = $pokemonPersonsActiveRow->ref(self::POKEMONS_TABLE, "pokemon_id");
+        }
+
+        return $this->createPokemonsFromMultipleDBData($pokemonActiveRows);
     }
 
     /**
@@ -231,7 +241,19 @@ class DBPokemonRepository implements IPokemonRepository
      */
     public function getPokemonsByType(Type $type): array
     {
-        // TODO: Implement getPokemonsByType() method.
+        /**
+         * @var \Nette\Database\Table\ActiveRow[] $pokemonTypesActiveRows
+         */
+        $pokemonTypesActiveRows = $this->db->table(self::POKEMON_TYPES_TABLE)
+            ->where("type_id", $type->getId())
+            ->fetchAll();
+
+        $pokemonActiveRows = [];
+        foreach ($pokemonTypesActiveRows as $pokemonTypesActiveRow) {
+            $pokemonActiveRows[] = $pokemonTypesActiveRow->ref(self::POKEMONS_TABLE, "pokemon_id");
+        }
+
+        return $this->createPokemonsFromMultipleDBData($pokemonActiveRows);
     }
 
     /**
@@ -446,15 +468,15 @@ class DBPokemonRepository implements IPokemonRepository
     /**
      * Create pokemons from multiple database data
      *
-     * @param array $multipleData Array of data from database (edited with Nette Database Explorer)
+     * @param \Nette\Database\Table\ActiveRow[] $multipleData Array of data from database (edited with Nette Database Explorer)
      *
      * @return \App\Entity\Pokemon[] Pokemons
      */
     public function createPokemonsFromMultipleDBData(array $multipleData): array
     {
         $pokemons = [];
-        foreach ($multipleData as $data) {
-            $pokemons[] = $this->createPokemonFromDBData($data);
+        foreach ($multipleData as $pokemonActiveRow) {
+            $pokemons[] = $this->createPokemonFromDBData($this->constructPokemonData($pokemonActiveRow));
         }
 
         return $pokemons;
