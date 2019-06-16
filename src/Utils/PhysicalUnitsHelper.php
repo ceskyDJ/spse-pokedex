@@ -55,9 +55,9 @@ class PhysicalUnitsHelper
     {
         list($value, $unit) = explode(" ", $input);
 
-        $converter = new Convertor($value, $outputUnit);
+        $converter = new Convertor((int)$value, $unit);
         try {
-            return $converter->to($unit);
+            return $converter->to($outputUnit);
         } catch (ConvertorDifferentTypeException $e) {
             return 0.0;
         } catch (ConvertorException $e) {
