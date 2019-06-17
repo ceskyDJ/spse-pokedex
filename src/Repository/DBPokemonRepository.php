@@ -336,6 +336,9 @@ class DBPokemonRepository implements IPokemonRepository
         array $types,
         array $weaknesses
     ): void {
+        $previousEvolutionPokemonId = $previousEvolutionPokemonId !== 0 ? $previousEvolutionPokemonId : null;
+        $nextEvolutionPokemonId = $nextEvolutionPokemonId !== 0 ? $nextEvolutionPokemonId : null;
+
         try {
             $this->db->table(self::POKEMONS_TABLE)
                 ->insert(
