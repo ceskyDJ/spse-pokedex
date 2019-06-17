@@ -20,7 +20,6 @@ use Tracy\Debugger;
 use function array_replace_recursive;
 use function file_exists;
 use function implode;
-use function in_array;
 use function is_dir;
 use function mkdir;
 use function parse_ini_file;
@@ -247,7 +246,16 @@ class Configurator extends Model
      */
     public function isActualServerDevelopment(): bool
     {
-        return in_array($_SERVER['SERVER_NAME'], $this->configs['development-server']);
+        $mode = $this->configs['development-server']['mode'];
+
+        if ($mode === true) {
+            return true;
+        } elseif ($mode === false) {
+            return false;
+        } else {
+            return ($this->configs['development-server']['domain'] === $_SERVER['SERVER_NAME'])
+                || Debugger::detectDebugMode();
+        }
     }
 
     /**
