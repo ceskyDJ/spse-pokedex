@@ -86,7 +86,6 @@ class JsonParser
                 $minimumMultiplier = null;
                 $maximumMultiplier = null;
             }
-
             try {
                 $spawnTime = new DateTime($jsonPokemon['spawn_time']);
             } catch (Exception $e) {

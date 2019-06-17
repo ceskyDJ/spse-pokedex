@@ -8,10 +8,7 @@ use App\Exceptions\NoConfigFileGivenException;
 use App\Exceptions\NonExistingFileException;
 use App\Exceptions\NotSetAllDataInLocalConfigException;
 use App\Model\Common\Model;
-use function bdump;
-use function is_dir;
 use JanDrabek\Tracy\GitVersionPanel;
-use function mkdir;
 use Nette\Bridges\DatabaseTracy\ConnectionPanel;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Database\Connection;
@@ -24,7 +21,13 @@ use function array_replace_recursive;
 use function file_exists;
 use function implode;
 use function in_array;
+use function is_dir;
+use function mkdir;
 use function parse_ini_file;
+use function trigger_error;
+use function ucfirst;
+use const E_USER_NOTICE;
+use const E_USER_WARNING;
 use const INI_SCANNER_TYPED;
 
 /**
@@ -119,8 +122,8 @@ class Configurator extends Model
      */
     private function setDirectoriesFromConfigs(): void
     {
-        $this->tempDir = "../{$this->configs['paths']['temp']}";
-        $this->logDir = "../{$this->configs['paths']['log']}";
+        $this->setTempDir($this->configs['paths']['temp']);
+        $this->setLogDir($this->configs['paths']['log']);
     }
 
     /**
@@ -134,7 +137,7 @@ class Configurator extends Model
 
         // Databáze
         $dbConfig = $this->getDatabaseConfig();
-        $dbStorage = new FileStorage(__DIR__."/../{$this->getTempDir()}");
+        $dbStorage = new FileStorage($this->getTempDir());
         $dbConnection = new Connection("mysql:host={$dbConfig['host']};dbname={$dbConfig['database']}", $dbConfig['user-name'], $dbConfig['user-password']);
         $dbStructure = new Structure($dbConnection, $dbStorage);
         $dbConventions = new DiscoveredConventions($dbStructure);
@@ -167,7 +170,7 @@ class Configurator extends Model
             // Cannot occur, because it's types manually
         }
 
-        Debugger::$logDirectory = __DIR__."/../{$this->getLogDir()}";
+        Debugger::$logDirectory = $this->getLogDir();
         Debugger::$productionMode = !$this->isActualServerDevelopment();
     }
 
@@ -200,7 +203,11 @@ class Configurator extends Model
      */
     public function setTempDir(string $tempDir): Configurator
     {
-        $this->tempDir = "../$tempDir";
+        $this->tempDir = __DIR__."/../../{$tempDir}";
+
+        if (!is_dir($this->tempDir)) {
+            $this->resolveInvalidDirectoryFromConfig($this->tempDir, "temp");
+        }
 
         return $this;
     }
@@ -224,7 +231,11 @@ class Configurator extends Model
      */
     public function setLogDir(string $logDir): Configurator
     {
-        $this->logDir = "../$logDir";
+        $this->logDir = __DIR__."/../../{$logDir}";
+
+        if (!is_dir($this->logDir)) {
+            $this->resolveInvalidDirectoryFromConfig($this->logDir, "log");
+        }
 
         return $this;
     }
@@ -237,5 +248,21 @@ class Configurator extends Model
     public function isActualServerDevelopment(): bool
     {
         return in_array($_SERVER['SERVER_NAME'], $this->configs['development-server']);
+    }
+
+    /**
+     * Resolves invalid directory loaded from config
+     *
+     * @param string $dir Loaded directory full path
+     * @param string $type Type of directory (ex. log, type, ...)
+     */
+    private function resolveInvalidDirectoryFromConfig(string $dir, string $type): void
+    {
+        trigger_error(ucfirst($type)." dir not found (path: {$dir}). Creating...", E_USER_NOTICE);
+
+        $success = @mkdir($dir); // Warning is triggered manually
+        if ($success !== true) {
+            trigger_error("Cannot create {$type} dir (path: {$dir}).", E_USER_WARNING);
+        }
     }
 }
