@@ -163,6 +163,10 @@ class PersonManager extends Model
         }
 
         $person = $this->dbPersonRepository->getPersonByNick($nick);
+        if ($person === null) {
+            throw new InvalidUserPasswordException("Nick and/or password isn't valid.");
+        }
+
         if (!$this->cryptographyHelper->verifyPassword($password, $nick, $person->getPasswordHash())) {
             throw new InvalidUserPasswordException("Nick and/or password isn't valid.");
         }
