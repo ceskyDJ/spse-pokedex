@@ -42,3 +42,5 @@ You can see live version at https://pokedex.ceskydj.cz/
 - Create database
 - Set database credentials in src/Config/local-config.ini
 - Go to /json-upload for uploading base data
+- Create user account manually with PersonManager's register() method (registration isn't available)
+- Set admin rights to the new user in database (change isn't available, too)
